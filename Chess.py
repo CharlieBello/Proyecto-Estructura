@@ -1,3 +1,4 @@
+import copy
 class GameState():
     def __init__(self):
         self.board = [
@@ -93,7 +94,39 @@ class GameState():
         self.board[rookPos[0]][rookPos[1]] = "bR"
         self.board[bishopPos[0]][bishopPos[1]] = "wB"
 
-                
+#     def evaluar_tablero(tablero):
+#     valores_piezas = {
+#         'B': 3, 'R': 5,
+#         'wB': 3, 'bR': 5
+#     }
+#     evaluacion = 0
+#     for fila in tablero:
+#         for pieza in fila:
+#             if pieza in valores_piezas:
+#                 evaluacion += valores_piezas[pieza]
+#     return evaluacion
+
+# def minimax(tablero, profundidad, es_maximizador):
+#     if profundidad == 0:
+#         return evaluar_tablero(tablero)
+
+#     if es_maximizador:
+#         max_eval = -float('inf')
+#         for movimiento in self.moveFunctions(tablero, True):
+#             nuevo_tablero = self.makeMove(tablero, movimiento)
+#             eval = minimax(nuevo_tablero, profundidad - 1, False)
+#             max_eval = max(max_eval, eval)
+#         return max_eval
+#     else:
+#         min_eval = float('inf')
+#         for movimiento in self.moveFunctions(tablero, False):
+#             nuevo_tablero =self.makeMove(tablero, movimiento)
+#             eval = minimax(nuevo_tablero, profundidad - 1, True)
+#             min_eval = min(min_eval, eval)
+#         return min_eval
+
+# print(minimax(self.board, 3, True))
+    
 
 class Move():
 
