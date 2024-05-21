@@ -26,6 +26,7 @@ def main():
     animate = False
     GameOver = False
     loadImages()
+    BOARD = gs.board
     running = True
     sqSelected = ()
     playerCLicks = []
@@ -116,6 +117,27 @@ def drawBoard(screen):
         for c in range(dimension):
             color = colors[((r+c)%2)]
             p.draw.rect(screen, color, p.Rect(c*sq_size, r*sq_size, sq_size, sq_size))
+
+# def drawBoard(screen):
+#   G = nx.grid_2d_graph(BOARD.shape)
+#   for val,node in zip(BOARD.ravel(), sorted(G.nodes())):
+#     if val=='R':
+#         G= nx.relabel_node(G,{node:'R'})
+#     elif val=='B':
+#         G= nx.relabel_node(G,{node:'B'})
+
+#   plt.figure(figsize=(9,9))
+#   global colors
+#   colors = [p.Color("white"), p.Color("gray")]
+#   pos = {(x,y):(y,-x) for x,y in G.nodes()}
+#   for r in range(dimension):
+#     for c in range(dimension):
+#         color = colors[((r+c)%2)]
+#           nx.draw(G, pos=pos, 
+#           node_color='grey',
+#           width = 4,
+#           node_size=400)
+
 
 def drawPieces(screen, board):
     for r in range(dimension):
