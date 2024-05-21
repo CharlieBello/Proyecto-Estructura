@@ -1,5 +1,8 @@
 import pygame as p
 import Chess as ChessEngine
+from matplotlib import pyplot as plt
+import numpy as np
+import networkx as nx
 
 width = height = 512
 dimension = 8
@@ -26,7 +29,6 @@ def main():
     animate = False
     GameOver = False
     loadImages()
-    BOARD = gs.board
     running = True
     sqSelected = ()
     playerCLicks = []
@@ -64,12 +66,15 @@ def main():
                     animate = False
                 if e.key == p.K_r:
                     gs = ChessEngine.GameState()
+                    gs.setPieces(rookPos, bishopPos)
                     validMoves = gs.getValidMoves()
                     sqSelected = ()
                     playerCLicks = []
                     moveMade = False
                     animate = False
                     GameOver = False
+                if e.key == p.K_g:
+                    drawGraph(gs.board)
         if moveMade:
             if animate:
                 animatedMove(gs.moveLog[-1], screen, gs.board, clock)
@@ -118,25 +123,24 @@ def drawBoard(screen):
             color = colors[((r+c)%2)]
             p.draw.rect(screen, color, p.Rect(c*sq_size, r*sq_size, sq_size, sq_size))
 
-# def drawBoard(screen):
-#   G = nx.grid_2d_graph(BOARD.shape)
-#   for val,node in zip(BOARD.ravel(), sorted(G.nodes())):
-#     if val=='R':
-#         G= nx.relabel_node(G,{node:'R'})
-#     elif val=='B':
-#         G= nx.relabel_node(G,{node:'B'})
-
-#   plt.figure(figsize=(9,9))
-#   global colors
-#   colors = [p.Color("white"), p.Color("gray")]
-#   pos = {(x,y):(y,-x) for x,y in G.nodes()}
-#   for r in range(dimension):
-#     for c in range(dimension):
-#         color = colors[((r+c)%2)]
-#           nx.draw(G, pos=pos, 
-#           node_color='grey',
-#           width = 4,
-#           node_size=400)
+def drawGraph(BOARD):
+    board = np.array(BOARD)
+    G: nx.Graph = nx.grid_2d_graph(8, 8)
+    colors = []
+    pos = {(x,y):(y,-x) for x,y in G.nodes()}
+    plt.figure(figsize=(9,9))
+    for r in range(dimension):
+        for c in range(dimension):
+            if board[r][c] == "wB":
+                colors.append("blue")
+            elif board[r][c] == "bR":
+                colors.append("Black")
+            else: colors.append("grey")
+    nx.draw(G, pos=pos, 
+    node_color=colors,
+    width = 4,
+    node_size=400)
+    plt.show()
 
 
 def drawPieces(screen, board):
